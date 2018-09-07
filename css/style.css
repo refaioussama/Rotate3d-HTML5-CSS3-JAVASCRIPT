@@ -1,0 +1,145 @@
+/*
+vars
+*/
+
+:root {
+  --persp:350px;
+}
+
+
+
+/*
+structure
+*/
+
+body {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  overflow:hidden;
+}
+
+
+
+.view {
+  width:70vmin; height:70vmin; 
+}
+
+.world {
+  position:relative; width:100%; height:100%;
+}
+
+.world a {
+  display:block; width:100%; height:100%;
+  position:absolute; top:0; left:0;
+}
+
+.world a img {
+  display:block; max-height:100%; max-width:100%;
+  position:absolute; top:50%; left:50%;
+  -webkit-transform:translate(-50%, -50%);
+          transform:translate(-50%, -50%);
+}
+
+
+
+/*
+set items angles
+*/
+
+a:nth-of-type(4n + 1) { --x:1; --y:0; --z:1; --a:30deg; }
+a:nth-of-type(4n + 2) { --x:1; --y:1; --z:0; --a:30deg; }
+a:nth-of-type(4n + 3) { --x:1; --y:1; --z:0; --a:-30deg; }
+a:nth-of-type(4n + 4) { --x:1; --y:1; --z:1; --a:30deg; }
+a {
+  -webkit-transform:rotate3d(var(--x),var(--y),var(--z),var(--a));
+          transform:rotate3d(var(--x),var(--y),var(--z),var(--a));
+}
+
+
+
+/*
+styling
+*/
+
+.view {
+  -webkit-transform-style:preserve-3d;
+          transform-style:preserve-3d;
+  -webkit-perspective-origin:center center;
+          perspective-origin:center center;
+  -webkit-perspective:var(--persp);
+          perspective:var(--persp);
+}
+
+.world {
+  background:
+    repeating-linear-gradient(to bottom, 
+      transparent calc(10% - 20px),
+      hsla(0,0%,0%,0.17) 10%
+    ),
+    repeating-linear-gradient(to right, 
+      transparent calc(10% - 20px),
+      hsla(0,0%,0%,0.17) 10%
+    );
+  box-sizing:border-box;
+  -webkit-transform-style:preserve-3d;
+          transform-style:preserve-3d;
+}
+
+.world a {
+  -webkit-transform-style:preserve-3d;
+          transform-style:preserve-3d;
+}
+
+.world a img {
+  box-shadow:0 0 10px 2px rgba(0,0,0,0.3);
+  -webkit-filter:grayscale(0.5);
+          filter:grayscale(0.5);
+}
+
+
+
+/*
+transition
+*/
+
+.world {
+  transition:-webkit-transform 1s;
+  transition:transform 1s;
+  transition:transform 1s, -webkit-transform 1s;
+}
+
+.world a {
+  transition:opacity 0.5s 0.2s;
+  opacity:0;
+}
+
+.world a.focus {
+  opacity:1;
+}
+
+
+
+/*
+Interaction
+*/
+
+.world {
+  pointer-events:none;
+}
+
+.world a {
+  pointer-events:none;
+}
+
+.world a.focus {
+  pointer-events:auto;
+}
+
+.world a:hover img {
+  transition:all 0.3s;
+  -webkit-filter:grayscale(0)contrast(1.5);
+          filter:grayscale(0)contrast(1.5);
+  box-shadow:0 0 10px powderblue, 0 0 0 1px dimgray;
+}
